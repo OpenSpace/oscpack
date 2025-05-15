@@ -42,26 +42,36 @@ osc/OscOutboundPacketStream.cpp
 
 )
 
+target_include_directories(oscpack SYSTEM PRIVATE ext/oscpack)
 
-ADD_EXECUTABLE(OscUnitTests tests/OscUnitTests.cpp)
-TARGET_LINK_LIBRARIES(OscUnitTests oscpack ${LIBS})
+option(OSCPACK_HAVE_TESTS "Activate the oscpack unit tests" OFF)
 
-ADD_EXECUTABLE(OscSendTests tests/OscSendTests.cpp)
-TARGET_LINK_LIBRARIES(OscSendTests oscpack ${LIBS})
+if (OSCPACK_HAVE_TESTS)
+  ADD_EXECUTABLE(OscUnitTests tests/OscUnitTests.cpp)
+  TARGET_LINK_LIBRARIES(OscUnitTests oscpack ${LIBS})
+  target_include_directories(OscUnitTests SYSTEM PRIVATE ext/oscpack)
 
-ADD_EXECUTABLE(OscReceiveTest tests/OscReceiveTest.cpp)
-TARGET_LINK_LIBRARIES(OscReceiveTest oscpack ${LIBS})
+  ADD_EXECUTABLE(OscSendTests tests/OscSendTests.cpp)
+  TARGET_LINK_LIBRARIES(OscSendTests oscpack ${LIBS})
+  target_include_directories(OscSendTests SYSTEM PRIVATE ext/oscpack)
+
+  ADD_EXECUTABLE(OscReceiveTest tests/OscReceiveTest.cpp)
+  TARGET_LINK_LIBRARIES(OscReceiveTest oscpack ${LIBS})
+  target_include_directories(OscReceiveTest SYSTEM PRIVATE ext/oscpack)
 
 
-ADD_EXECUTABLE(OscDump examples/OscDump.cpp)
-TARGET_LINK_LIBRARIES(OscDump oscpack ${LIBS})
+  ADD_EXECUTABLE(OscDump examples/OscDump.cpp)
+  TARGET_LINK_LIBRARIES(OscDump oscpack ${LIBS})
+  target_include_directories(OscDump SYSTEM PRIVATE ext/oscpack)
 
-ADD_EXECUTABLE(SimpleReceive examples/SimpleReceive.cpp)
-TARGET_LINK_LIBRARIES(SimpleReceive oscpack ${LIBS})
+  ADD_EXECUTABLE(SimpleReceive examples/SimpleReceive.cpp)
+  TARGET_LINK_LIBRARIES(SimpleReceive oscpack ${LIBS})
+  target_include_directories(SimpleReceive SYSTEM PRIVATE ext/oscpack)
 
-ADD_EXECUTABLE(SimpleSend examples/SimpleSend.cpp)
-TARGET_LINK_LIBRARIES(SimpleSend oscpack ${LIBS})
-
+  ADD_EXECUTABLE(SimpleSend examples/SimpleSend.cpp)
+  TARGET_LINK_LIBRARIES(SimpleSend oscpack ${LIBS})
+  target_include_directories(SimpleSend SYSTEM PRIVATE ext/oscpack)
+endif (OSCPACK_HAVE_TESTS)
 
 if(MSVC)
   # Force to always compile with W4
