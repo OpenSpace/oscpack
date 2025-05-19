@@ -42,7 +42,7 @@ osc/OscOutboundPacketStream.cpp
 
 )
 
-target_include_directories(oscpack SYSTEM PRIVATE ext/oscpack)
+target_include_directories(oscpack SYSTEM PRIVATE ".")
 
 option(OSCPACK_HAVE_TESTS "Activate the oscpack unit tests" OFF)
 
